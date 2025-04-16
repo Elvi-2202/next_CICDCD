@@ -26,7 +26,7 @@ If your are on Windows, execute this command in Powershell or cmd
 ```
 cd Jenkins-agent
 docker build -t jenkins-agent-with-docker-and-node .
-docker run --init --name jenkins_agent_node -v /var/run/docker.sock:/var/run/docker.sock jenkins-agent-with-docker-and-node -url http://<Jenkins_master_IP_adress>:8080 <secret> <agent_name>
+docker run --init --name jenkins_agent_node -v /var/run/docker.sock:/var/run/docker.sock jenkins-agent-with-docker-and-node -url http://172.17.0.2:8080 69666fd10128ae07698725ca5435aef2982b5e51339cec937458d897c5d1ce85 next_CICDCD
 ```
 
 Want to try the entire CICD on your own repository and registry ?
