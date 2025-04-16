@@ -1,28 +1,20 @@
-# Étape 1 : Image de base Jenkins Inbound Agent
+# FROM jenkins/inbound-agent
+# USER root
+# RUN apt update && apt install -y curl
+# RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+#     && apt install -y nodejs
+# RUN node -v && npm -v  
+# RUN npm install -g next
+# USER jenkins
+# WORKDIR /home/jenkins/agent
+ 
 FROM jenkins/inbound-agent
-
-# Passer à l'utilisateur root pour installer des outils
 USER root
-
-# Mettre à jour les paquets et installer curl
-RUN apt update && apt install -y curl
-
-# Installer Node.js
+RUN apt update && apt install -y curl gnupg lsb-release ca-certificates
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt install -y nodejs
-
-# Vérifier la version de Node.js et npm
 RUN node -v && npm -v
-
-# Installer Next.js globalement (optionnel, si nécessaire pour des tests)
 RUN npm install -g next
-
-# Revenir à l'utilisateur jenkins pour des raisons de sécurité
-USER jenkins
-
-# Définir le répertoire de travail (dans lequel Jenkins travaillera)
+RUN curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
+RUN sh get-docker.sh
 WORKDIR /home/jenkins/agent
-
-# C'est ici que le processus d'agent Jenkins sera démarré (par défaut)
-ENTRYPOINT ["java", "-jar", "/usr/share/jenkins/agent.jar", "-url", "http://172.17.0.2:8080", "69666fd10128ae07698725ca5435aef2982b5e51339cec937458d897c5d1ce85", "next_CICDCD"]
-
